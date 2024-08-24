@@ -9,6 +9,7 @@ def init_database():
         with Session(engine) as session:
             session.add(Team(id=1, name="CyberPewPew"))
             session.add(Team(id=2, name="Bot"))
+            # TODO: add chall datas
             session.commit()
     except:
         pass
