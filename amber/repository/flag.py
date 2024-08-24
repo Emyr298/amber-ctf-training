@@ -8,7 +8,6 @@ def add_flag(session: Session, container: Container, flag_content: str, tick: in
     session.add(flag)
 
 def pwn_flags(session: Session, team: Team, posted_flags: list[str]):
-    print(GLOBAL["CURRENT_TICK"])
     statement = select(Flag).join(
             Container, Flag.container_id == Container.id, isouter=True
         ).join(
