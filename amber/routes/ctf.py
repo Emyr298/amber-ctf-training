@@ -4,7 +4,8 @@ from database import engine
 
 from repository.flag import pwn_flags
 from repository.team import get_team_by_id
-from validators.ctf import PostFlags
+from utils.flags import notify_pwns
+from dto.ctf import PostFlags
 
 ctf_bp = Blueprint("ctf", __name__)
 
@@ -20,6 +21,8 @@ def post_flags():
         if not team:
             raise Exception("team not found")
         accepted_flags = pwn_flags(session, team, body.flags)
+        if len(accepted_flags) > 0:
+            notify_pwns(session, team, accepted_flags)
         session.commit()
     
     return { "accepted": accepted_flags }

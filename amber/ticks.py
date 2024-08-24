@@ -3,15 +3,20 @@ from apscheduler.triggers.cron import CronTrigger
 from sqlmodel import Session
 from database import engine
 
+import threading
 from repository.team import get_teams
 from repository.containers import get_containers
 from repository.flag import add_flag
 from utils.flags import generate_flag
 from config import GLOBAL
 
+from utils.discord import notify_background
+
 def change_flags():
     GLOBAL["CURRENT_TICK"] += 1
-    print("RENEWING FLAGS FOR TICK {}".format(GLOBAL["CURRENT_TICK"]))
+    print("TICK {}".format(GLOBAL["CURRENT_TICK"]))
+    
+    notify_background("**Tick {} Started**".format(GLOBAL["CURRENT_TICK"]))
     
     with Session(engine) as session:
         for team in get_teams(session):

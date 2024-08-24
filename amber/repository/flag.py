@@ -7,6 +7,9 @@ def add_flag(session: Session, container: Container, flag_content: str, tick: in
     flag = Flag(flag=flag_content, container=container, tick=tick)
     session.add(flag)
 
+def get_flags_from_strings(session: Session, flag_strs: str):
+    return session.exec(select(Flag).where(col(Flag.flag).in_(flag_strs))).fetchall()
+
 def pwn_flags(session: Session, team: Team, posted_flags: list[str]):
     statement = select(Flag).join(
             Container, Flag.container_id == Container.id, isouter=True
