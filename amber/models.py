@@ -3,7 +3,7 @@ from sqlmodel import SQLModel, Field, Relationship
 
 class TeamFlagLink(SQLModel, table=True):
     team_id: int | None = Field(default=None, foreign_key="team.id", primary_key=True)
-    flag_id: int | None = Field(default=None, foreign_key="flag.id", primary_key=True)
+    flag_id: str = Field(foreign_key="flag.flag", primary_key=True)
 
 class Chall(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -30,8 +30,8 @@ class Container(SQLModel, table=True):
     flags: list["Flag"] = Relationship(back_populates="container")
 
 class Flag(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    content: str = Field(unique=True)
+    flag: str = Field(primary_key=True)
+    tick: int
     
     container_id: int | None = Field(default=None, foreign_key="container.id")
     container: Container = Relationship(back_populates="flags")
