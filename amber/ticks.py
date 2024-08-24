@@ -20,7 +20,12 @@ def change_flags():
     with Session(engine) as session:
         for team in get_teams(session):
             for container in get_containers(session, team):
-                add_flag(session, container, generate_flag())
+                while True:
+                    try:
+                        add_flag(session, container, generate_flag())
+                    except:
+                        continue
+                    break
                 # TODO: change on docker containers
 
 def setup_ticks():
