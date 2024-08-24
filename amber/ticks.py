@@ -29,6 +29,7 @@ def change_flags():
                 # TODO: change on docker containers
 
 def setup_ticks():
+    change_flags()
     scheduler = BackgroundScheduler()
-    scheduler.add_job(change_flags, CronTrigger(second="*"))
+    scheduler.add_job(change_flags, CronTrigger(minute="*/5"))
     scheduler.start()
