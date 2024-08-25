@@ -8,20 +8,21 @@ class TeamFlagLink(SQLModel, table=True):
 class Chall(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(unique=True)
+    port: int
     
     containers: list["Container"] = Relationship(back_populates="chall")
 
 class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(unique=True)
+    host: str
+    host_token: str
     
     flags: list["Flag"] = Relationship(back_populates="teams", link_model=TeamFlagLink)
     containers: list["Container"] = Relationship(back_populates="team")
 
 class Container(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    host: str
-    port: int
     
     chall_id: int | None = Field(default=None, foreign_key="chall.id")
     chall: Chall = Relationship(back_populates="containers")

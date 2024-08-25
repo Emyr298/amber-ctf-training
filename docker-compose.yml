@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  amber-ctf-training:
+    container_name: amber-ctf-training
+    hostname: amber-ctf-training
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      - TEAM_BOT_HOST=...
+      - TEAM_BOT_AUTHORIZATION=...
+      - DISCORD_WEBHOOK=...

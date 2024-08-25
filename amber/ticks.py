@@ -3,13 +3,13 @@ from apscheduler.triggers.cron import CronTrigger
 from sqlmodel import Session
 from database import engine
 
-import threading
 from repository.team import get_teams
 from repository.containers import get_containers
 from repository.flag import add_flag
 from utils.flags import generate_flag
 from config import GLOBAL
 
+from utils.flags import change_flag_async
 from utils.discord import notify_background
 
 def change_flags():
@@ -29,8 +29,8 @@ def change_flags():
                     except:
                         continue
                     break
-                # TODO: change on docker containers
-        session.commit() # Commit before connecting to docker containers if possible.. or making connecting to docker container async or in other thread
+                change_flag_async(team.host, team.host_token, container.chall.name, flag)
+        session.commit()
 
 def setup_ticks():
     change_flags()

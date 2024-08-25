@@ -1,8 +1,8 @@
-import requests, threading
+import os, requests, threading
 
 def notify(msg: str):
     requests.post(
-        "https://discord.com/api/webhooks/1276865274397855816/og2wkWfVKzeaLjrAxPP8XTu_un7hXx3whzBbdNNManNLaI5Hw-WVwZbzWh7NRRerhebE",
+        os.getenv("DISCORD_WEBHOOK"),
         json={
             "content": msg,
         }
